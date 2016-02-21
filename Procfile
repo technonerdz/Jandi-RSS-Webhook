@@ -1,1 +1,1 @@
-web: ./build/install/KotlinExample/bin/KotlinExample --server.port=80
+web: ./build/install/KotlinExample/bin/KotlinExample --server.port=$PORT
