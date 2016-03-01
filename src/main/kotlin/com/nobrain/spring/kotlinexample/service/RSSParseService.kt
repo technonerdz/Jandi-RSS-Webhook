@@ -17,7 +17,7 @@ class RSSParseService {
     @Autowired
     lateinit var rssRepository: RssRepository
 
-    fun getRssEntries(feed: SyndFeed?): List<RssEntry> {
+    private fun getRssEntries(feed: SyndFeed?): List<RssEntry> {
 
         val entries: List<RssEntry> = feed?.entries?.map { it ->
             it as SyndEntry
@@ -28,7 +28,7 @@ class RSSParseService {
         return entries;
     }
 
-    fun getSyncFeed(url: String): SyndFeed? {
+    private fun getSyncFeed(url: String): SyndFeed? {
         var url: URL = URL(url);
         var syndFeed: SyndFeedInput = SyndFeedInput();
 
@@ -36,9 +36,9 @@ class RSSParseService {
         return feed
     }
 
-    fun getLastRssUri(url: String): String {
-        val findOne: RssInfo = rssRepository.findOne(url)
-        return findOne.lastGuid
+    private fun getLastRssUri(url: String): String {
+        val findOne: RssInfo? = rssRepository.findOne(url)
+        return findOne?.lastGuid ?: ""
     }
 
     fun updateLastRssUri(url: String, uri: String): RssInfo {
@@ -46,25 +46,48 @@ class RSSParseService {
 
         rssInfo?.lastGuid = uri
 
-        return rssRepository.save(rssInfo ?: RssInfo(url, uri))
+        return rssRepository.save(rssInfo ?: RssInfo(0, url, uri))
     }
 
-    fun getLastRssEntries(entries: List<RssEntry>, lastGuid: String): List<RssEntry> {
+    fun updateLastRssUri(rssEntries: List<Pair<RssInfo, List<RssEntry>>>) {
+
+        rssEntries.forEach { it ->
+            it.first.lastGuid = it.second.firstOrNull()?.guid ?: it.first.lastGuid
+            rssRepository.save(it.first)
+        }
+
+    }
+
+    private fun getLastRssEntries(entries: List<RssEntry>, lastGuid: String): List<RssEntry> {
         return entries.takeWhile { it -> it.guid != lastGuid }
     }
 
-    fun getRssInfos(): List<RssInfo> = rssRepository.findAll().toList()
-
-    fun addRssInfo(rssInfo: RssInfo): RssInfo? {
+    fun createRssInfo(rssInfo: RssInfo): RssInfo? {
         val syncFeed = getSyncFeed(rssInfo.rssUrl)
-
-        rssInfo.name = syncFeed?.title ?: ""
-        rssInfo.lastGuid = getRssEntries(syncFeed).firstOrNull()?.guid ?: ""
-        return rssRepository.save(rssInfo)
-
+        if (syncFeed != null ) {
+            rssInfo.name = syncFeed.title ?: ""
+            return rssRepository.save(rssInfo)
+        } else {
+            return rssInfo
+        }
     }
 
-    fun removeRssInfo(rssInfo: RssInfo) {
-        rssRepository.delete(rssInfo.rssUrl)
+    fun getAllRSSFeed(): List<Pair<RssInfo, List<RssEntry>>> {
+        val list: List<Pair<RssInfo, List<RssEntry>>> = rssRepository.findAll()
+                .map { it ->
+                    val syncFeed = getSyncFeed(it.rssUrl)
+                    val lastRssEntries = getLastRssEntries(getRssEntries(syncFeed), it.lastGuid)
+                    Pair<RssInfo, List<RssEntry>>(it, lastRssEntries)
+                }
+        return list;
+    }
+
+    fun getRSSFeed(rssId: Long): Pair<RssInfo, List<RssEntry>> {
+        val rssInfo: RssInfo? = rssRepository.findOne(rssId)
+        if (rssInfo != null) {
+            return Pair(rssInfo, getLastRssEntries(getRssEntries(getSyncFeed(rssInfo.rssUrl)), rssInfo.lastGuid))
+        } else {
+            return Pair<RssInfo, List<RssEntry>>(RssInfo(), ArrayList<RssEntry>())
+        }
     }
 }

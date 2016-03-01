@@ -1,0 +1,30 @@
+{
+  "name": "KotlinExample",
+  "authors": [
+    "jsuch2362 <jsuch2362@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.1",
+    "bootstrap-material-design": "^0.5.8",
+    "bootstrap": "^3.3.6",
+    "bootstrap-css-only": "^3.3.6"
+  },
+  "install": {
+    "path": {
+      "css": "src/main/resources/static/lib/css",
+      "js": "src/main/resources/static/lib/js"
+    }
+  }
+}

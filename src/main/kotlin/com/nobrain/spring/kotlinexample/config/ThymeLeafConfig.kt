@@ -13,25 +13,26 @@ open class ThymeLeafConfig {
     @Bean
     open fun templateResolver(): ServletContextTemplateResolver {
         val templateResolver: ServletContextTemplateResolver = ServletContextTemplateResolver();
-        templateResolver.setPrefix("/WEB-INF/templates/");
-        templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML5");
-        return templateResolver;
+        templateResolver.setPrefix("/WEB-INF/templates/")
+        templateResolver.setSuffix(".html")
+        templateResolver.setTemplateMode("HTML5")
+        return templateResolver
     }
 
     @Bean
     open fun templateEngine(): SpringTemplateEngine {
-        val templateEngine: SpringTemplateEngine = SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver());
-        return templateEngine;
+        val templateEngine: SpringTemplateEngine = SpringTemplateEngine()
+        templateEngine.setTemplateResolver(templateResolver())
+        return templateEngine
     }
 
     @Bean
     open fun viewResolver(): ViewResolver {
-        val viewResolver: ThymeleafViewResolver = ThymeleafViewResolver() ;
-        viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setOrder(1);
-        return viewResolver;
+        val viewResolver: ThymeleafViewResolver = ThymeleafViewResolver()
+        viewResolver.characterEncoding = "UTF-8"
+        viewResolver.setTemplateEngine(templateEngine())
+        viewResolver.setOrder(1)
+        return viewResolver
     }
 
 }
