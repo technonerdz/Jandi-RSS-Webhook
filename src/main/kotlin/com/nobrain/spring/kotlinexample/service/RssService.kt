@@ -28,4 +28,11 @@ class RssService {
     }
 
     fun getRssInfos(): List<RssInfo> = rssRepository.findAll().toList()
+
+    fun updateWorkStatus(rssId: Long, rssInfo: RssInfo): RssInfo? {
+
+        val savedRssInfo: RssInfo? = rssRepository.findOne(rssId)
+        savedRssInfo?.work = rssInfo.work
+        return rssRepository.save(savedRssInfo)
+    }
 }

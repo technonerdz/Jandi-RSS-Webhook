@@ -24,7 +24,9 @@
 <script src="/app/js/index/index.js"></script>
 
 <div class="container">
-    <div id="webhook_manage" class="btn btn-raised btn-primary">Webhook</div>
+    <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+        <li class="active" id="webhook_manage" style="float: right"><a>Webhook</a></li>
+    </ul>
     <div class="jumbotron">
         <div class="form-group label-floating">
             <label class="control-label" for="rss_url">RSS Url</label>
@@ -43,6 +45,7 @@
                 <th>Name</th>
                 <th>RSS Url</th>
                 <th>Last Feed</th>
+                <th>Work Status</th>
             </tr>
             </thead>
             <tbody>
@@ -51,26 +54,17 @@
                 <td th:text="${data.name}">name</td>
                 <td th:text="${data.rssUrl}">RSS Url</td>
                 <td th:text="${data.lastGuid}">Last Feed</td>
+                <td>
+                    <div class="togglebutton">
+                        <label>
+                            <input type="checkbox" th:checked="${data.work}" th:value="${data.id}"
+                                   class="rss_item_work_status"/>
+                        </label>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
-    </div>
-
-    <div class="modal fade" id="rss-modal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 id="rss-modal-title">title</h1>
-                </div>
-                <div class="modal-body">
-                    <div id="rss-modal-url">url</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="rss-modal-delete">Delete</button>
-                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="modal fade" id="webhook-modal" tabindex="-1">
@@ -91,9 +85,9 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>RSS Url</th>
-                            <th>Last Feed</th>
+                            <th>URL</th>
+                            <th>Description</th>
+                            <th>Work Status</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -102,6 +96,14 @@
                             <td th:text="${webhookData.id}">id</td>
                             <td th:text="${webhookData.url}">url</td>
                             <td th:text="${webhookData.description}">description</td>
+                            <td>
+                                <div class="togglebutton">
+                                    <label>
+                                        <input type="checkbox" th:checked="${webhookData.work}"
+                                               th:value="${webhookData.id}" class="webhook_work_status"/>
+                                    </label>
+                                </div>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

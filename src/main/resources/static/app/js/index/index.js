@@ -23,18 +23,19 @@ require(['material', '/app/js/index/index_controller.js'], function (material, c
         });
     });
 
-    $('.rss_item').click(function (event) {
-        var rssId = event.currentTarget.id;
-        controller.getRSS(rssId, function (data) {
-            $('#rss-modal-title').text(data.name);
-            $('#rss-modal-url').text(data.rssUrl);
-            $('#rss-modal-delete').click(function () {
-                controller.deleteRSS(rssId, function () {
-                    location.reload();
-                });
-            });
-            $('#rss-modal').modal();
+    $('.rss_item_work_status').change(function () {
+        var rssId = this.value
+        var workStatus = this.checked
+        controller.updateRssWorkStatus(rssId, workStatus, function (data) {
+
         });
     });
 
+    $('.webhook_work_status').change(function () {
+        var webhookId = this.value
+        var workStatus = this.checked
+        controller.updateWebhookStatus(webhookId, workStatus, function (data) {
+
+        });
+    })
 });

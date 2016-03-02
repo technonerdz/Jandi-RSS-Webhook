@@ -39,12 +39,14 @@ class JandiWebHookService {
     }
 
     fun pushWebhook(jandiWebhookData: List<JandiWebhookData>) {
-        val webhook: List<JandiWebhook> = jandiWebhookRepository.findAll().toList()
+        val webhook: List<JandiWebhook> = jandiWebhookRepository.findAll().filter { it.work }.toList()
         webhook.forEach { it ->
             val webhookUrl = it.url
-            jandiWebhookData.forEach { that ->
-                sendWebhook(webhookUrl, that)
-            }
+            jandiWebhookData
+                    .filter { !it.connectInfo.isEmpty() }
+                    .forEach { that ->
+                        sendWebhook(webhookUrl, that)
+                    }
         }
     }
 

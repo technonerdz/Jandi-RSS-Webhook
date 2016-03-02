@@ -74,6 +74,7 @@ class RSSParseService {
 
     fun getAllRSSFeed(): List<Pair<RssInfo, List<RssEntry>>> {
         val list: List<Pair<RssInfo, List<RssEntry>>> = rssRepository.findAll()
+                .filter { it.work }
                 .map { it ->
                     val syncFeed = getSyncFeed(it.rssUrl)
                     val lastRssEntries = getLastRssEntries(getRssEntries(syncFeed), it.lastGuid)

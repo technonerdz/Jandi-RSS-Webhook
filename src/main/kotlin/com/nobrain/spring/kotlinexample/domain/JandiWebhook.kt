@@ -9,4 +9,5 @@ import javax.persistence.Id
 data class JandiWebhook(@Id @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
                         var id: Long = 0,
                         var url: String = "",
-                        var description: String = "")
+                        var description: String = "",
+                        var work: Boolean = true)

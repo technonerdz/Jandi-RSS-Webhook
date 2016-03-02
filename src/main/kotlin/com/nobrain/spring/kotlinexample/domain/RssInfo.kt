@@ -9,4 +9,5 @@ data class RssInfo(@Id @GeneratedValue(strategy = javax.persistence.GenerationTy
                    var id: Long = 0,
                    var rssUrl: String = "",
                    var lastGuid: String = "",
-                   var name: String = "")
+                   var name: String = "",
+                   var work: Boolean = true)

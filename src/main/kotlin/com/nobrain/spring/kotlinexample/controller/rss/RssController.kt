@@ -38,6 +38,11 @@ class RssController {
         return rssParseService.createRssInfo(rssInfo)
     }
 
+    @RequestMapping("/rss/{rssId}/work", method = arrayOf(RequestMethod.PUT))
+    fun updateRssWorkStatus(@PathVariable rssId: Long, @RequestBody rssInfo: RssInfo): RssInfo? {
+        return rssService.updateWorkStatus(rssId, rssInfo);
+    }
+
     @RequestMapping("/rss/harvest")
     fun pushAllRSSFeed() {
         val allRssFeed: List<Pair<RssInfo, List<RssEntry>>> = rssParseService.getAllRSSFeed()

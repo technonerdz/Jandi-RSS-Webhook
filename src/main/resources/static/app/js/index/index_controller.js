@@ -50,6 +50,32 @@ define([], function () {
                 type: 'GET',
                 success: callback
             })
+        },
+        updateRssWorkStatus: function (rssId, workStatus, callback) {
+            $.ajax({
+                url: '/rss/' + rssId + "/work",
+                type: 'PUT',
+                data: JSON.stringify({
+                    work: workStatus
+                }),
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                success: callback
+            })
+        },
+        updateWebhookStatus: function (rssId, workStatus, callback) {
+            $.ajax({
+                url: '/webhook/' + rssId + "/work",
+                type: 'PUT',
+                data: JSON.stringify({
+                    work: workStatus
+                }),
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                success: callback
+            })
         }
     }
 });
