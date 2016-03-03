@@ -1,3 +1,5 @@
 function rss() {
-    command curl http://localhost:$PORT/rss/harverst
+    command env
+    command echo "==================="
+    command curl https://localhost:$PORT/rss/harverst
 }
