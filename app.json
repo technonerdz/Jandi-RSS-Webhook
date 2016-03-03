@@ -7,17 +7,10 @@
     "webhook"
   ],
   "repository": "https://github.com/ZeroBrain/KotlinExample",
-  "env": {
-    "region": {
-      "description": "날씨 예보 지역입니다",
-      "value": "역삼동"
-    }
-  },
   "sccuess_url": "/",
   "addons": [
     "scheduler:standard",
-    "heroku-postgresql:hobby-dev",
-    "labs:enabled runtime-dyno-metadata"
+    "heroku-postgresql:hobby-dev"
   ],
   "scripts": {
     "postdeploy": "labs:enable runtime-dyno-metadata"
