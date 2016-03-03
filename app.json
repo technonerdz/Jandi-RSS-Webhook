@@ -7,12 +7,14 @@
     "webhook"
   ],
   "repository": "https://github.com/ZeroBrain/KotlinExample",
+  "env": {
+    "HEROKU_APP_NAME": {
+      "description": "Heroku App Name (* required)"
+    }
+  },
   "sccuess_url": "/",
   "addons": [
     "scheduler:standard",
     "heroku-postgresql:hobby-dev"
-  ],
-  "scripts": {
-    "postdeploy": "labs:enable runtime-dyno-metadata"
-  }
+  ]
 }
