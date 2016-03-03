@@ -25,7 +25,7 @@ class RSSParseService {
             var description = if (it.description != null) {
                 it.description.value
             } else {
-                it.contents?.firstOrNull()?.toString() ?: ""
+                ""
             }
             RssEntry(it.link, it.title, description, it.uri)
         } ?: ArrayList<RssEntry>()
