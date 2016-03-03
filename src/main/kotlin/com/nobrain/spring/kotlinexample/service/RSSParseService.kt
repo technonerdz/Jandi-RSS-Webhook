@@ -17,18 +17,23 @@ class RSSParseService {
     @Autowired
     lateinit var rssRepository: RssRepository
 
-    private fun getRssEntries(feed: SyndFeed?): List<RssEntry> {
+    internal fun getRssEntries(feed: SyndFeed?): List<RssEntry> {
 
         val entries: List<RssEntry> = feed?.entries?.map { it ->
             it as SyndEntry
         }?.map { it ->
-            RssEntry(it.link, it.title, it.description.value, it.uri)
+            var description = if (it.description != null) {
+                it.description.value
+            } else {
+                it.contents?.firstOrNull()?.toString() ?: ""
+            }
+            RssEntry(it.link, it.title, description, it.uri)
         } ?: ArrayList<RssEntry>()
 
         return entries;
     }
 
-    private fun getSyncFeed(url: String): SyndFeed? {
+    internal fun getSyncFeed(url: String): SyndFeed? {
         var url: URL = URL(url);
         var syndFeed: SyndFeedInput = SyndFeedInput();
 
