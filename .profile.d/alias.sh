@@ -1,3 +1,3 @@
 function rss() {
-    command curl -v $HEROKU_URLrss/harverst
+    command curl -v "'"$HEROKU_URL"'"rss/harverst
 }
