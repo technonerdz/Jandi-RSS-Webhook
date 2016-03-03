@@ -76,6 +76,13 @@ define([], function () {
                 },
                 success: callback
             })
+        },
+        runHarvest: function (callback) {
+            $.ajax({
+                url: '/rss/harvest',
+                success: callback
+            })
+
         }
     }
 });

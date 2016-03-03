@@ -16,6 +16,12 @@ require(['material', '/app/js/index/index_controller.js'], function (material, c
         $('#webhook-modal').modal()
     });
 
+    $('#run').click(function () {
+        controller.runHarvest(function () {
+            location.reload();
+        })
+    });
+
     $('#webhook_add').click(function () {
         var webhookUrl = $('#webhook_url').val();
         controller.addWebhook(webhookUrl, function () {
