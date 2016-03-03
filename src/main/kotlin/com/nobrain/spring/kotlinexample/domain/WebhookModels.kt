@@ -18,7 +18,7 @@ data class JandiWebhookConnectInfo(
     companion object {
         fun create(rssEntry: RssEntry): JandiWebhookConnectInfo {
             val title = "[${rssEntry.title}](${rssEntry.link})"
-            val desciption = "[${rssEntry.description}](${rssEntry.link})"
+            val desciption = rssEntry.description
             return JandiWebhookConnectInfo(title, desciption)
         }
     }
