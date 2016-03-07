@@ -1,6 +1,9 @@
 package com.nobrain.spring.kotlinexample.service
 
-import com.nobrain.spring.kotlinexample.domain.*
+import com.nobrain.spring.kotlinexample.domain.JandiWebhook
+import com.nobrain.spring.kotlinexample.domain.JandiWebhookData
+import com.nobrain.spring.kotlinexample.domain.RssEntry
+import com.nobrain.spring.kotlinexample.domain.RssInfo
 import com.nobrain.spring.kotlinexample.repository.JandiWebhookRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,11 +31,11 @@ class JandiWebHookService {
     fun createJandiWebhookDatas(allRssFeed: List<Pair<RssInfo, List<RssEntry>>>): List<JandiWebhookData> {
 
 
-        val hookData: List<JandiWebhookData> = allRssFeed.map { it ->
-            val connectInfos: List<JandiWebhookConnectInfo> = it.second.map { it ->
-                JandiWebhookConnectInfo.create(it)
+        var hookData: List<JandiWebhookData> = allRssFeed.flatMap { it ->
+            val toList: List<JandiWebhookData> = it.second.map { it ->
+                JandiWebhookData.create(it)
             }.toList()
-            JandiWebhookData(body = "${it.first.name}'s RSS", connectInfo = connectInfos)
+            toList
         }
 
         return hookData
@@ -43,7 +46,6 @@ class JandiWebHookService {
         webhook.forEach { it ->
             val webhookUrl = it.url
             jandiWebhookData
-                    .filter { !it.connectInfo.isEmpty() }
                     .forEach { that ->
                         sendWebhook(webhookUrl, that)
                     }

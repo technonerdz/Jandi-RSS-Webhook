@@ -17,7 +17,7 @@ class JandiWebHookServiceTest {
     @Test
     fun testSendWebhook() {
         println()
-        val sendWebhook = JandiWebHookService.sendWebhook("https://wh.jandi.com/connect-api/webhook/279/435df354f02086d5b7a9b034d404c2df",
+        val sendWebhook = JandiWebHookService.sendWebhook("https://wh.jandi.com/connect-api/webhook/279/c25efffcf187d6b9c4d9e5653abb1737",
                 JandiWebhookData(body = "test", connectInfo = arrayListOf(JandiWebhookConnectInfo("title1", "desc1"))))
 
     }

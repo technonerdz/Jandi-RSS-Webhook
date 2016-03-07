@@ -10,6 +10,13 @@ data class JandiWebhookData(
         var body: String = "",
         var connectInfo: List<JandiWebhookConnectInfo> = ArrayList()) {
     val connectColor: String = "#FAC11B"
+
+    companion object {
+        fun create(rssEntry: RssEntry): JandiWebhookData {
+            val body = "[${rssEntry.title}](${rssEntry.link})"
+            return JandiWebhookData(body, ArrayList())
+        }
+    }
 }
 
 data class JandiWebhookConnectInfo(
